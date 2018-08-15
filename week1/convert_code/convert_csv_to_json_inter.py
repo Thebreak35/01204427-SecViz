@@ -11,11 +11,12 @@ color = {}
 names = {}
 
 csvfile = open('2018-07-International Exchange - _Index.csv', 'r')
-jsonfile = open('2018-07-International Exchange - _Index.json', 'w')
+jsonfile = open('inter.json', 'w')
 
 reader = csv.DictReader(csvfile)
 
-start_size = 1
+start_size = 10
+inc = 3
 sname = ''
 for row in reader:
 	sname = row['ASN']
@@ -24,7 +25,7 @@ for row in reader:
 		dummy[sname] = sname
 		names[row['ASN']] = row['Name']
 	else:
-		size[row['ASN']] = int(size[row['ASN']]) + start_size
+		size[row['ASN']] = int(size[row['ASN']]) + inc
 	edge = {}
 	edge['sourceID'] = row['ASN-Source']
 	edge['targetID'] = row['ASN']
@@ -50,6 +51,5 @@ data = {}
 data['nodes'] = nodes
 data['edges'] = edges
 
-pp.pprint(data)
 
 json.dump(data, jsonfile)

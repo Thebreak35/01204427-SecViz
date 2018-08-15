@@ -11,11 +11,11 @@ color = {}
 names = {}
 
 csvfile = open('2018-07-Domestic Exchange - Index.csv', 'r')
-jsonfile = open('2018-07-Domestic Exchange - Index.json', 'w')
+jsonfile = open('domestic.json', 'w')
 
 reader = csv.DictReader(csvfile)
 
-start_size = 1
+start_size = 10
 sname = ''
 for row in reader:
 	sname = row['ASN']
@@ -50,6 +50,5 @@ data = {}
 data['nodes'] = nodes
 data['edges'] = edges
 
-pp.pprint(data)
 
 json.dump(data, jsonfile)
