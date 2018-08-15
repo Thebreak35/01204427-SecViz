@@ -10,8 +10,8 @@ size = {}
 color = {}
 names = {}
 
-csvfile = open('2018-07-Domestic Exchange - Index.csv', 'r')
-jsonfile = open('2018-07-Domestic Exchange - Index.json', 'w')
+csvfile = open('2018-07-International Exchange - _Index.csv', 'r')
+jsonfile = open('2018-07-International Exchange - _Index.json', 'w')
 
 reader = csv.DictReader(csvfile)
 
@@ -26,7 +26,7 @@ for row in reader:
 	else:
 		size[row['ASN']] = int(size[row['ASN']]) + start_size
 	edge = {}
-	edge['sourceID'] = row['ASN-source']
+	edge['sourceID'] = row['ASN-Source']
 	edge['targetID'] = row['ASN']
 	edge['attributes'] = {}
 	edge['size'] = 1
