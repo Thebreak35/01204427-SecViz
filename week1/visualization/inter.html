@@ -25,7 +25,7 @@ $.getJSON('inter.json', function (json) {
     myChart.hideLoading();
     myChart.setOption(option = {
         title: {
-            text: 'NPM Dependencies'
+            text: 'International'
         },
         animationDurationUpdate: 1500,
         animationEasingUpdate: 'quinticInOut',
@@ -34,6 +34,10 @@ $.getJSON('inter.json', function (json) {
                 type: 'graph',
                 layout: 'none',
                 // progressiveThreshold: 700,
+                // layout: 'circular',
+                // circular: {
+                //     rotateLabel: true
+                // },
                 data: json.nodes.map(function (node) {
                     return {
                         x: node.x,

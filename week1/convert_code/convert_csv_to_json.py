@@ -16,6 +16,7 @@ jsonfile = open('domestic.json', 'w')
 reader = csv.DictReader(csvfile)
 
 start_size = 10
+inc = 3
 sname = ''
 for row in reader:
 	sname = row['ASN']
@@ -24,7 +25,16 @@ for row in reader:
 		dummy[sname] = sname
 		names[row['ASN']] = row['Name']
 	else:
-		size[row['ASN']] = int(size[row['ASN']]) + start_size
+		size[row['ASN']] = int(size[row['ASN']]) + inc
+	
+	sname = row['ASN-source']
+	if sname not in dummy:
+		size[row['ASN-source']] = start_size
+		dummy[sname] = sname
+		names[row['ASN-source']] = row['ASN-source']
+	else:
+		size[row['ASN-source']] = int(size[row['ASN-source']]) + 0.5
+
 	edge = {}
 	edge['sourceID'] = row['ASN-source']
 	edge['targetID'] = row['ASN']

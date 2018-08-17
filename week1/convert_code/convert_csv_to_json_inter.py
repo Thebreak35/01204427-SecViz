@@ -23,9 +23,18 @@ for row in reader:
 	if sname not in dummy:
 		size[row['ASN']] = start_size
 		dummy[sname] = sname
-		names[row['ASN']] = row['Name']
+		names[row['ASN']] = row['ASN']
 	else:
 		size[row['ASN']] = int(size[row['ASN']]) + inc
+
+	sname = row['ASN-Source']
+	if sname not in dummy:
+		size[row['ASN-Source']] = start_size
+		dummy[sname] = sname
+		names[row['ASN-Source']] = row['ASN-Source']
+	else:
+		size[row['ASN-Source']] = int(size[row['ASN-Source']]) + 0.1
+
 	edge = {}
 	edge['sourceID'] = row['ASN-Source']
 	edge['targetID'] = row['ASN']
