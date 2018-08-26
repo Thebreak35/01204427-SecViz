@@ -16,7 +16,7 @@ jsonfile = open('inter.json', 'w')
 reader = csv.DictReader(csvfile)
 
 start_size = 10
-inc = 3
+inc = 1.0
 sname = ''
 for row in reader:
 	sname = row['ASN']
@@ -25,7 +25,7 @@ for row in reader:
 		dummy[sname] = sname
 		names[row['ASN']] = row['ASN']
 	else:
-		size[row['ASN']] = int(size[row['ASN']]) + inc
+		size[row['ASN']] = float(size[row['ASN']]) + inc
 
 	sname = row['ASN-Source']
 	if sname not in dummy:
@@ -33,13 +33,15 @@ for row in reader:
 		dummy[sname] = sname
 		names[row['ASN-Source']] = row['ASN-Source']
 	else:
-		size[row['ASN-Source']] = int(size[row['ASN-Source']]) + 0.1
+		size[row['ASN-Source']] = float(size[row['ASN-Source']]) + 0.1
 
 	edge = {}
 	edge['sourceID'] = row['ASN-Source']
 	edge['targetID'] = row['ASN']
 	edge['attributes'] = {}
-	edge['size'] = 1
+	edge['size'] = float(row['Bandwidth'])/30
+	if edge['size'] < 1.0:
+		edge['size'] = 0.1
 	edges.append(edge)
 
 r = lambda: random.randint(0,255)

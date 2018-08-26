@@ -41,6 +41,8 @@ for row in reader:
 	edge['attributes'] = {}
 	# edge['size'] = 1
 	edge['size'] = float(row['Bandwidth'])/50
+	if edge['size'] < 1.0:
+		edge['size'] = 0.1
 	edges.append(edge)
 
 r = lambda: random.randint(0,255)
