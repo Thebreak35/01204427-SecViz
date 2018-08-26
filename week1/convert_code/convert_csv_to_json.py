@@ -7,8 +7,9 @@ nodes = []
 edges = []
 dummy = {}
 size = {}
-color = {}
 names = {}
+ASN_type_mapping = {}
+type_dummy = {}
 
 csvfile = open('2018-07-Domestic Exchange - Index.csv', 'r')
 jsonfile = open('domestic.json', 'w')
@@ -16,17 +17,18 @@ jsonfile = open('domestic.json', 'w')
 reader = csv.DictReader(csvfile)
 
 start_size = 5
-inc = 0.5
+inc = 1
 sname = ''
 for row in reader:
 	sname = row['ASN']
 	if sname not in dummy:
 		size[row['ASN']] = start_size
 		dummy[sname] = sname
-		names[row['ASN']] = row['Name']
+		names[row['ASN']] = row['ASN']
 	else:
 		size[row['ASN']] = float(size[row['ASN']]) + inc
 	
+	ASN_type_mapping[sname] = row['Type']
 	sname = row['ASN-source']
 	if sname not in dummy:
 		size[row['ASN-source']] = start_size
@@ -34,6 +36,13 @@ for row in reader:
 		names[row['ASN-source']] = row['ASN-source']
 	else:
 		size[row['ASN-source']] = float(size[row['ASN-source']]) + inc
+
+	ASN_type_mapping[sname] = row['Type']
+	my_type = row['Type']
+	if my_type not in type_dummy:
+		r = lambda: random.randint(0,255)
+		color = '#%02X%02X%02X' % (r(),r(),r())
+		type_dummy[my_type] = color
 
 	edge = {}
 	edge['sourceID'] = row['ASN-source']
@@ -45,10 +54,7 @@ for row in reader:
 		edge['size'] = 0.1
 	edges.append(edge)
 
-r = lambda: random.randint(0,255)
-
 for i in dummy:
-	color = '#%02X%02X%02X' % (r(),r(),r())
 	node = {}
 	node['id'] = i
 	node['x'] = random.uniform(-1000, 1000)
@@ -56,7 +62,7 @@ for i in dummy:
 	node['size'] = size[i]
 	node['attributes'] = {}
 	node['label'] = names[i]
-	node['color'] = color
+	node['color'] = type_dummy[ASN_type_mapping[i]]
 	nodes.append(node)
 
 data = {}
