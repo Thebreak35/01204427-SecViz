@@ -19,25 +19,40 @@
 var dom = document.getElementById("container");
 var myChart = echarts.init(dom);
 var app = {};
+
 option = null;
 myChart.showLoading();
 $.getJSON('domestic.json', function (json) {
+    var categories = [];
+    for (var i = 0; i < 9; i++) {
+        categories[i] = {
+            name: 'CAT' + i
+        };
+    }
+
     myChart.hideLoading();
     myChart.setOption(option = {
         title: {
             text: 'Domestic'
         },
+        legend: [{
+            // selectedMode: 'single',
+            data: categories.map(function (a) {
+                return a.name;
+            })
+        }],
         animationDurationUpdate: 1500,
         animationEasingUpdate: 'quinticInOut',
         series : [
             {
                 type: 'graph',
                 layout: 'none',
-                // progressiveThreshold: 700,
-                // layout: 'circular',
-                // circular: {
-                //     rotateLabel: true
-                // },
+                progressiveThreshold: 700,
+                layout: 'circular',
+                categories: categories,
+                circular: {
+                    rotateLabel: true
+                },
                 data: json.nodes.map(function (node) {
                     return {
                         x: node.x,
@@ -69,6 +84,12 @@ $.getJSON('domestic.json', function (json) {
                     emphasis: {
                         position: 'right',
                         show: true
+                    }
+                },
+                lineStyle: {
+                    normal: {
+                        color: 'source',
+                        curveness: 0.3
                     }
                 },
                 roam: true,

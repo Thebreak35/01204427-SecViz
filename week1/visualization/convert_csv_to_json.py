@@ -19,8 +19,11 @@ reader = csv.DictReader(csvfile)
 start_size = 5
 inc = 1
 sname = ''
+num = 0
 for row in reader:
 	sname = row['ASN']
+
+
 	if sname not in dummy:
 		size[row['ASN']] = start_size
 		dummy[sname] = sname
@@ -30,6 +33,8 @@ for row in reader:
 	
 	ASN_type_mapping[sname] = row['Type']
 	sname = row['ASN-source']
+
+
 	if sname not in dummy:
 		size[row['ASN-source']] = start_size
 		dummy[sname] = sname
@@ -39,10 +44,14 @@ for row in reader:
 
 	ASN_type_mapping[sname] = row['Type']
 	my_type = row['Type']
+
+
 	if my_type not in type_dummy:
 		r = lambda: random.randint(0,255)
 		color = '#%02X%02X%02X' % (r(),r(),r())
 		type_dummy[my_type] = color
+		# types[color] = 
+		num = num + 1
 
 	edge = {}
 	edge['sourceID'] = row['ASN-source']
@@ -50,9 +59,12 @@ for row in reader:
 	edge['attributes'] = {}
 	# edge['size'] = 1
 	edge['size'] = float(row['Bandwidth'])/50
+
+
 	if edge['size'] < 1.0:
 		edge['size'] = 0.1
 	edges.append(edge)
+
 
 for i in dummy:
 	node = {}
@@ -71,6 +83,7 @@ nodes = sorted(nodes, key=lambda k: k['x'], reverse=True)
 data = {}
 data['nodes'] = nodes
 data['edges'] = edges
+data['num'] = num
 
 
 json.dump(data, jsonfile)
