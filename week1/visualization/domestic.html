@@ -24,11 +24,27 @@ option = null;
 myChart.showLoading();
 $.getJSON('domestic.json', function (json) {
     var categories = [];
-    for (var i = 0; i < 9; i++) {
-        categories[i] = {
-            name: 'CAT' + i
-        };
-    }
+    var i = 0;
+    data: json.nodes.map(function (node) {
+      categories[i] = {
+        name: node.label,
+        itemStyle: {
+            color: node.color,
+          }
+      };
+      i = i + 1;
+    });
+
+    // data: json.nodes.map(function (node) {
+    //     for (var i = 0; i < 100; i++) {
+    //       categories[i] = {
+    //           name: node.id,
+    //           itemStyle: {
+    //             color: node.color,
+    //           }
+    //       };
+    //     }
+    // });
 
     myChart.hideLoading();
     myChart.setOption(option = {
@@ -38,7 +54,7 @@ $.getJSON('domestic.json', function (json) {
         legend: [{
             // selectedMode: 'single',
             data: categories.map(function (a) {
-                return a.name;
+                return a;
             })
         }],
         animationDurationUpdate: 1500,
@@ -60,6 +76,7 @@ $.getJSON('domestic.json', function (json) {
                         id: node.id,
                         name: node.label,
                         symbolSize: node.size,
+                        categories: node.categories,
                         itemStyle: {
                             normal: {
                                 color: node.color
