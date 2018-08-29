@@ -65,6 +65,9 @@ for i in dummy:
 	node['color'] = type_dummy[ASN_type_mapping[i]]
 	nodes.append(node)
 
+nodes = sorted(nodes, key=lambda k: k['x'], reverse=True) 
+
+
 data = {}
 data['nodes'] = nodes
 data['edges'] = edges
