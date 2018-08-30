@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+
+
+// var data = [];
+// var now = +new Date(1997, 9, 3);
+// var oneDay = 24 * 3600 * 1000;
+// var value = Math.random() * 1000;
+
+
+option = {
+    title: {
+        text: 'Number of Users login by time',
+        subtext: 'Time Series'
+    },
+    tooltip: {
+        trigger: 'axis',
+        
+        axisPointer: {
+            animation: false
+        }
+    },
+    xAxis: {
+        // type: 'time',
+        name: 'Y/M/D Time',
+        data: ["2017-01-02 00:15:00", "2017-01-02 00:30:00", "2017-01-02 00:45:00", "2017-01-02 01:00:00", "2017-01-02 01:15:00", "2017-01-02 01:30:00", "2017-01-02 01:45:00", "2017-01-02 02:00:00", "2017-01-02 02:15:00", "2017-01-02 02:30:00", "2017-01-02 02:45:00", "2017-01-02 03:00:00", "2017-01-02 03:15:00", "2017-01-02 03:30:00", "2017-01-02 03:45:00", "2017-01-02 04:00:00", "2017-01-02 04:15:00", "2017-01-02 04:30:00", "2017-01-02 04:45:00", "2017-01-02 05:00:00", "2017-01-02 05:15:00", "2017-01-02 05:30:00", "2017-01-02 05:45:00", "2017-01-02 06:00:00", "2017-01-02 06:15:00", "2017-01-02 06:30:00", "2017-01-02 06:45:00", "2017-01-02 07:00:00", "2017-01-02 07:15:00", "2017-01-02 07:30:00", "2017-01-02 07:45:00", "2017-01-02 08:00:00", "2017-01-02 08:15:00", "2017-01-02 08:30:00", "2017-01-02 08:45:00", "2017-01-02 09:00:00", "2017-01-02 09:15:00", "2017-01-02 09:30:00", "2017-01-02 09:45:00", "2017-01-02 10:00:00", "2017-01-02 10:15:00", "2017-01-02 10:30:00", "2017-01-02 10:45:00", "2017-01-02 11:00:00", "2017-01-02 11:15:00", "2017-01-02 11:30:00", "2017-01-02 11:45:00", "2017-01-02 12:00:00", "2017-01-02 12:15:00", "2017-01-02 12:30:00", "2017-01-02 12:45:00", "2017-01-02 13:00:00", "2017-01-02 13:15:00", "2017-01-02 13:30:00", "2017-01-02 13:45:00", "2017-01-02 14:00:00", "2017-01-02 14:15:00", "2017-01-02 14:30:00", "2017-01-02 14:45:00", "2017-01-02 15:00:00", "2017-01-02 15:15:00", "2017-01-02 15:30:00", "2017-01-02 15:45:00", "2017-01-02 16:00:00", "2017-01-02 16:15:00", "2017-01-02 16:30:00", "2017-01-02 16:45:00", "2017-01-02 17:00:00", "2017-01-02 17:15:00", "2017-01-02 17:30:00", "2017-01-02 17:45:00", "2017-01-02 18:00:00", "2017-01-02 18:15:00", "2017-01-02 18:30:00", "2017-01-02 18:45:00", "2017-01-02 19:00:00", "2017-01-02 19:15:00", "2017-01-02 19:30:00", "2017-01-02 19:45:00", "2017-01-02 20:00:00", "2017-01-02 20:15:00", "2017-01-02 20:30:00", "2017-01-02 20:45:00", "2017-01-02 21:00:00", "2017-01-02 21:15:00", "2017-01-02 21:30:00", "2017-01-02 21:45:00", "2017-01-02 22:00:00", "2017-01-02 22:15:00", "2017-01-02 22:30:00", "2017-01-02 22:45:00", "2017-01-02 23:00:00", "2017-01-02 23:15:00", "2017-01-02 23:30:00", "2017-01-02 23:45:00", "2017-01-03 00:00:00"],
+        splitLine: {
+            show: false
+        },
+    },
+    yAxis: {
+        name: '# of users',
+        type: 'value',
+        boundaryGap: [0, '100%'],
+        splitLine: {
+            show: false
+        }
+    },
+    dataZoom: [{
+        type: 'inside',
+        start: 0,
+        end: 10
+    }, {
+        start: 0,
+        end: 10,
+        handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+        handleSize: '80%',
+        handleStyle: {
+            color: '#fff',
+            shadowBlur: 3,
+            shadowColor: 'rgba(0, 0, 0, 0.6)',
+            shadowOffsetX: 2,
+            shadowOffsetY: 2
+        }
+    }],
+    series: [{
+        name: '# of users',
+        type: 'line',
+        showSymbol: false,
+        hoverAnimation: false,
+        data: [14, 34, 33, 30, 27, 23, 20, 13, 15, 15, 9, 4, 7, 9, 8, 10, 6, 4, 7, 7, 8, 6, 7, 15, 19, 21, 28, 31, 42, 42, 34, 45, 64, 80, 80, 105, 116, 104, 112, 112, 102, 111, 112, 107, 111, 109, 131, 143, 137, 161, 153, 136, 142, 125, 118, 122, 136, 133, 136, 151, 134, 125, 129, 124, 113, 122, 117, 112, 104, 90, 90, 106, 114, 116, 116, 117, 121, 120, 126, 139, 132, 110, 103, 117, 125, 114, 118, 112, 102, 97, 87, 82, 73, 73, 74, 71]
+    }]
+};
+
+// setInterval(function () {
+
+//     for (var i = 0; i < 5; i++) {
+//         data.shift();
+//         data.push(randomData());
+//     }
+
+//     myChart.setOption({
+//         series: [{
+//             data: data
+//         }]
+    // });
+// }, 1000);;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
