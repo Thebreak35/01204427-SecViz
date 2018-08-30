@@ -19,48 +19,41 @@ var dom = document.getElementById("container");
 var myChart = echarts.init(dom);
 var app = {};
 option = null;
-app.title = 'Login servers distribution';
-
 option = {
-    title: {
-        text: 'Login servers distribution',
-        subtext: 'Bar chart'
+    title : {
+        text: 'Login activity',
+        subtext: 'Pie Chart',
+        x:'center'
     },
-    tooltip: {
-        trigger: 'axis',
-        axisPointer: {
-            type: 'shadow'
-        }
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
     },
-    // legend: {
-    //     data: ['2011年']
-    // },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
+    legend: {
+        orient: 'vertical',
+        left: 'left',
+        data: ['login-page','TIMEOUT','RE-LOGIN','logout-page']
     },
-    xAxis: {
-        type: 'value',
-        boundaryGap: [0, 0.01]
-    },
-    yAxis: {
-        type: 'category',
-        data: ['::ffff:158.108.218.212','::ffff:158.108.218.205','::ffff:158.108.218.201','::ffff:158.108.218.206','::ffff:158.108.218.204','::ffff:158.108.218.203', '::ffff:158.108.218.208', '::ffff:158.108.218.209', '::ffff:158.108.218.210', '::ffff:158.108.218.211', '::ffff:158.108.218.207', '::ffff:158.108.218.202']
-    },
-    series: [
+    series : [
         {
-            // name: '2011年',
-            type: 'bar',
-            data: [673, 570, 644, 570, 665, 553, 567, 548, 592, 523, 589, 643],
-            itemStyle: {color: "#FF2626"}
-        },
-        // {
-        //     name: '2012年',
-        //     type: 'bar',
-        //     data: [19325, 23438, 31000, 121594, 134141, 681807]
-        // }
+            name: 'Agent Type',
+            type: 'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:[
+                {value:3574, name:'login-page', itemStyle: {color: '#FF9331'}},
+                {value:3312, name:'TIMEOUT', itemStyle: {color: '#FFBB60'}},
+                {value:229, name:'RE-LOGIN', itemStyle: {color: '#FFC48E'}},
+                {value:22, name:'logout-page', itemStyle: {color: '#FFE1C6'}}
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
     ]
 };
 ;
