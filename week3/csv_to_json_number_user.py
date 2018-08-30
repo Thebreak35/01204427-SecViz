@@ -5,8 +5,8 @@ import json
 from datetime import datetime
 
 
-csvfile = open('login-20170102-anon.csv', 'r')
-jsonfile = open('number_user.json', 'w')
+csvfile = open('login-20170102-anon.csv.txt', 'r')
+jsonfile = open('ip_ratio.json', 'w')
 reader = csv.DictReader(csvfile,  delimiter=' ', fieldnames=['login_session_id',
 'login_timestamp',
 'user',
@@ -28,14 +28,28 @@ reader = csv.DictReader(csvfile,  delimiter=' ', fieldnames=['login_session_id',
 'last_seen_timestamp'
 ])
 
+ipv4_count = 0
+ipv6_count = 0
+dual_stack_count = 0
 for row in reader:
-    cs = row['login_session_id']
-    print(cs)
-    # ts = int(row[1])
-    # print(datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'))
+    ipv4 = row['ipv4']
+    ipv6 = row['ipv6']
+    if ipv4 != '-' and ipv6 != '-':
+    	dual_stack_count += 1
+    elif ipv4 != '-' and ipv6 == '-':
+    	ipv4_count += 1
+    elif ipv4 == '-' and ipv6 != '-':
+    	ipv6_count += 1
 
-data = {
+d = {}
+d['ipv4'] = ipv4_count
+d['ipv6'] = ipv6_count
+d['dual stack'] = dual_stack_count
 
-}
+data = {}
+data = d
+# data['name'] = 'ipv4', 'ipv6', 'dual stack'
+# data['value'] = ipv4_count, ipv6_count, dual_stack_count
+# datas.append(data)
 
-# json.dump(data, jsonfile)
+json.dump(data, jsonfile)
