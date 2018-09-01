@@ -27,7 +27,7 @@ $.getJSON('domestic.json', function (json) {
     var i = 0;
     data: json.nodes.map(function (node) {
       categories[i] = {
-        name: node.label,
+        name: node.category,
         itemStyle: {
             color: node.color,
           }
@@ -35,22 +35,12 @@ $.getJSON('domestic.json', function (json) {
       i = i + 1;
     });
 
-    // data: json.nodes.map(function (node) {
-    //     for (var i = 0; i < 100; i++) {
-    //       categories[i] = {
-    //           name: node.id,
-    //           itemStyle: {
-    //             color: node.color,
-    //           }
-    //       };
-    //     }
-    // });
-
     myChart.hideLoading();
     myChart.setOption(option = {
         title: {
             text: 'Domestic'
         },
+        
         legend: [{
             // selectedMode: 'single',
             data: categories.map(function (a) {
@@ -76,7 +66,7 @@ $.getJSON('domestic.json', function (json) {
                         id: node.id,
                         name: node.label,
                         symbolSize: node.size,
-                        categories: node.categories,
+                        category: node.category,
                         itemStyle: {
                             normal: {
                                 color: node.color
@@ -92,7 +82,8 @@ $.getJSON('domestic.json', function (json) {
                             normal: {
                               width: edge.size,
                               curveness: 0,
-                              opacity: 0.7
+                              opacity: 0.7,
+                              color: '#000'
                             }
                         }
                     };
@@ -103,12 +94,7 @@ $.getJSON('domestic.json', function (json) {
                         show: true
                     }
                 },
-                lineStyle: {
-                    normal: {
-                        color: 'source',
-                        curveness: 0.3
-                    }
-                },
+                
                 roam: true,
                 focusNodeAdjacency: true,
             }

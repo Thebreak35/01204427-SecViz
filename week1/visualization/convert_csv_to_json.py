@@ -9,7 +9,9 @@ dummy = {}
 size = {}
 names = {}
 ASN_type_mapping = {}
+ASN_num_mapping = {}
 type_dummy = {}
+categories = []
 
 csvfile = open('2018-07-Domestic Exchange - Index.csv', 'r')
 jsonfile = open('domestic.json', 'w')
@@ -19,8 +21,9 @@ reader = csv.DictReader(csvfile)
 start_size = 5
 inc = 1
 sname = ''
-cate = {}
 i = 0
+num = 0
+cate = {}
 for row in reader:
 	sname = row['ASN']
 
@@ -29,6 +32,8 @@ for row in reader:
 		size[row['ASN']] = start_size
 		dummy[sname] = sname
 		names[row['ASN']] = row['ASN']
+		ASN_num_mapping[sname] = num
+		num += 1
 	else:
 		size[row['ASN']] = float(size[row['ASN']]) + inc
 	
@@ -40,6 +45,8 @@ for row in reader:
 		size[row['ASN-source']] = start_size
 		dummy[sname] = sname
 		names[row['ASN-source']] = row['ASN-source']
+		ASN_num_mapping[sname] = num
+		num += 1
 	else:
 		size[row['ASN-source']] = float(size[row['ASN-source']]) + inc
 
@@ -53,12 +60,16 @@ for row in reader:
 		type_dummy[my_type] = color
 		cate[my_type] = i
 		i = i + 1
+		cat = {}
+		cat['name'] = ASN_type_mapping[sname]
+		cat['keyword'] = {}
+		cat['base'] = ASN_type_mapping[sname]
+		categories.append(cat)
+
 
 	edge = {}
-	edge['sourceID'] = row['ASN-source']
-	edge['targetID'] = row['ASN']
-	edge['attributes'] = {}
-	# edge['size'] = 1
+	edge['sourceID'] = ASN_num_mapping[row['ASN-source']]
+	edge['targetID'] = ASN_num_mapping[row['ASN']]
 	edge['size'] = float(row['Bandwidth'])/50
 
 
@@ -73,16 +84,20 @@ for i in dummy:
 	node['x'] = random.uniform(-1000, 1000)
 	node['y'] = random.uniform(-1000, 1000)
 	node['size'] = size[i]
+	# node['value'] = 1
 	node['attributes'] = {}
 	node['label'] = names[i]
 	node['color'] = type_dummy[ASN_type_mapping[i]]
-	node['category'] = cate[ASN_type_mapping[i]]
+	node['category'] = ASN_type_mapping[i]
 	nodes.append(node)
+	
 
 nodes = sorted(nodes, key=lambda k: k['x'], reverse=True) 
 
 
 data = {}
+# data['type'] = "force"
+# data['categories'] = categories
 data['nodes'] = nodes
 data['edges'] = edges
 
