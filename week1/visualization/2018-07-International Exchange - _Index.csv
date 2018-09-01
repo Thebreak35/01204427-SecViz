@@ -1,4 +1,4 @@
-ASN-Source,ASN,Name,Type,Bandwidth,Gb/s,Connectivity Type
+ASN-source,ASN,Name,Type,Bandwidth,Gb/s,Connectivity Type
 AS38566,AS2914,NTT (SG),ISP-Inter,0.35,Gbps,Transit/IPv6 Dual Stack
 AS4651,AS45758,Triple T Internet/ Triple T Broadband,ISP-Local,0.5,Gbps,IPv4
 AS4651,AS38450,GIN,ISP-Govt,1,Gbps,IPv4

@@ -1,7 +1,7 @@
 import csv
 import json
 import random
-import pprint as pp
+from math import exp, expm1, log10
 
 nodes = []
 edges = []
@@ -18,16 +18,14 @@ jsonfile = open('domestic.json', 'w')
 
 reader = csv.DictReader(csvfile)
 
-start_size = 5
-inc = 1
+start_size = 1000
+inc = 1000
 sname = ''
 i = 0
 num = 0
 cate = {}
 for row in reader:
 	sname = row['ASN']
-
-
 	if sname not in dummy:
 		size[row['ASN']] = start_size
 		dummy[sname] = sname
@@ -35,7 +33,7 @@ for row in reader:
 		ASN_num_mapping[sname] = num
 		num += 1
 	else:
-		size[row['ASN']] = float(size[row['ASN']]) + inc
+		size[row['ASN']] = float(size[row['ASN']]) * inc
 	
 	ASN_type_mapping[sname] = row['Type']
 	sname = row['ASN-source']
@@ -47,8 +45,8 @@ for row in reader:
 		names[row['ASN-source']] = row['ASN-source']
 		ASN_num_mapping[sname] = num
 		num += 1
-	else:
-		size[row['ASN-source']] = float(size[row['ASN-source']]) + inc
+	# else:
+		# size[row['ASN-source']] = float(size[row['ASN-source']]) * inc
 
 	ASN_type_mapping[sname] = row['Type']
 	my_type = row['Type']
@@ -68,13 +66,15 @@ for row in reader:
 
 
 	edge = {}
-	edge['sourceID'] = ASN_num_mapping[row['ASN-source']]
-	edge['targetID'] = ASN_num_mapping[row['ASN']]
+	edge['sourceID'] = row['ASN-source']
+	edge['targetID'] = row['ASN']
 	edge['size'] = float(row['Bandwidth'])/50
+	# n = 100 * float(row['Bandwidth'])
+	# edge['size'] = log10(n)
+	# print("size: ", edge['size'])
 
-
-	if edge['size'] < 1.0:
-		edge['size'] = 0.1
+	# if edge['size'] < 1.0:
+	# 	edge['size'] = 0.1
 	edges.append(edge)
 
 
@@ -83,7 +83,7 @@ for i in dummy:
 	node['id'] = i
 	node['x'] = random.uniform(-1000, 1000)
 	node['y'] = random.uniform(-1000, 1000)
-	node['size'] = size[i]
+	node['size'] = log10(float(size[i]))
 	# node['value'] = 1
 	node['attributes'] = {}
 	node['label'] = names[i]
@@ -92,7 +92,7 @@ for i in dummy:
 	nodes.append(node)
 	
 
-nodes = sorted(nodes, key=lambda k: k['x'], reverse=True) 
+nodes = sorted(nodes, key=lambda k: k['size'], reverse=True) 
 
 
 data = {}
