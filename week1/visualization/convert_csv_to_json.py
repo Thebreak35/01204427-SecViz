@@ -19,7 +19,7 @@ jsonfile = open('domestic.json', 'w')
 reader = csv.DictReader(csvfile)
 
 start_size = 1000
-inc = 1000
+inc = 10
 sname = ''
 i = 0
 num = 0
@@ -45,8 +45,8 @@ for row in reader:
 		names[row['ASN-source']] = row['ASN-source']
 		ASN_num_mapping[sname] = num
 		num += 1
-	# else:
-		# size[row['ASN-source']] = float(size[row['ASN-source']]) * inc
+	else:
+		size[row['ASN-source']] = float(size[row['ASN-source']]) * inc
 
 	ASN_type_mapping[sname] = row['Type']
 	my_type = row['Type']

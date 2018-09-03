@@ -96,7 +96,7 @@ jsonfile = open('inter.json', 'w')
 reader = csv.DictReader(csvfile)
 
 start_size = 10000
-inc = 10
+inc = 10000000
 sname = ''
 i = 0
 num = 0
@@ -110,7 +110,7 @@ for row in reader:
 		ASN_num_mapping[sname] = num
 		num += 1
 	else:
-		size[row['ASN']] = float(size[row['ASN']]) * inc
+		size[row['ASN']] = float(size[row['ASN']]) + inc
 	
 	ASN_type_mapping[sname] = row['Type']
 	sname = row['ASN-source']
@@ -122,8 +122,8 @@ for row in reader:
 		names[row['ASN-source']] = row['ASN-source']
 		ASN_num_mapping[sname] = num
 		num += 1
-	# else:
-		# size[row['ASN-source']] = float(size[row['ASN-source']]) * inc
+	else:
+		size[row['ASN-source']] = float(size[row['ASN-source']]) + inc
 
 	ASN_type_mapping[sname] = row['Type']
 	my_type = row['Type']
