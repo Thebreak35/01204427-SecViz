@@ -25,12 +25,13 @@ d3.csv("3_4.csv", function(d) {
       .sum(function(d) { return d.value; })
       .each(function(d) {
         if (id = d.data.id) {
-          var id, i = id.lastIndexOf(".");
+          var id, i = id.indexOf(".");
           d.id = id;
-          d.package = id.slice(0, i);
-          // d.package = id.slice(i + 1);
-          d.class = id.slice(i + 1);
-          // d.class = id.slice(0, i + 1);
+          if (i > 20) i = 10;
+          // d.package = id.slice(0, i);
+          d.package = id.slice(i + 1);
+          // d.class = id.slice(i + 1);
+          d.class = id.slice(0, i + 1);
         }
       });
 

@@ -1,5 +1,12 @@
 import csv
 
+#Ingress
+def find_ip(txt):
+	if txt.find('158.108', 0) == 0 or txt.find('10.', 0) == 0 or txt.find('2460:', 0) == 0:
+		return True
+	else:
+		return False
+
 dummy = {}
 for t in range(0,60):
 	if t < 10:
@@ -10,8 +17,11 @@ for t in range(0,60):
 	for i in f:
 		line = []
 		line = i.split(' ')
+		#All http requests
 		if line[14] == '80': #line[13] is srcport
-			if line[16] != '-' and '158.108.' in line[16]:
+			#ingress
+			# print(line[11])
+			if line[16] != '-' and find_ip(str(line[11])): #line[11] is dest IP
 				if line[16] not in dummy:
 					dummy[line[16]] = 1
 				else :
