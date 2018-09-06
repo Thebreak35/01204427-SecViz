@@ -1,4 +1,4 @@
-import csv
+import json
 
 #Ingress
 def find_ip(txt):
@@ -13,7 +13,7 @@ def choose_last(lst):
 		n += 1
 	# if n == 0:
 	# 	return '-'
-	return lst[n]
+	return str(lst[n])
 
 dummy = {}
 for t in range(0,60):
@@ -28,19 +28,27 @@ for t in range(0,60):
 		#All http requests
 		if line[14] == '80': #line[13] is srcport
 			#ingress
-			# print(line[11])
 			if line[16] != '-' and find_ip(str(line[11])): #line[11] is dest IP
-				# print(line[17])
-				a = line[17].split('.')
-				t = choose_last(a)
-				if t not in dummy:
-					dummy[t] = 1
-				else :
-					dummy[t] += 1
-o = open('3_6.csv', 'w')
-o.write('id,value\n')
+				# a = line[17].split('.')
+				w = choose_last(line[17].split('.'))
+				if len(w) <= 10:
+					if (w.find('/') == -1 and 
+						w.find('?') == -1 and 
+						w.find('~') == -1 and 
+						w.find('=') == -1 and
+						w.find('-') == -1 and
+						w.find('(') == -1 and
+						w.find(')') == -1):
+						if w not in dummy:
+							dummy[w] = 1
+						else :
+							dummy[w] += 1
+o = open('3_6.json', 'w', encoding = "ISO-8859-1")
+target = []
+data = {}
 for i in dummy:
-	text = str(str(i) + ',' + str(dummy[i]))
-	o.write(text)
-	o.write('\n')
-
+	data = {}
+	data['value'] = dummy[i]
+	data['name'] = i
+	target.append(data)
+json.dump(target, o)
