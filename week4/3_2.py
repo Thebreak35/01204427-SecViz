@@ -1,24 +1,14 @@
-import json
-f = open('web-anon-201704100300.0.txt', 'r', encoding="utf8")
-o = open('3_2.json', 'w')
+# import json
+# f = open('just_data.json', 'r', encoding="utf8")
+# # o = open('user_data.json', 'w', encoding="utf8")
+# data = json.load(f)
+# portdst = open('portdst.json', 'w')
 
-dummy = {}
-maxnum = -1
-for i in f:
-	line = []
-	line = i.split(' ')
-	if line[4] != '-':
-		if line[4] not in dummy:
-			dummy[line[4]] = 1
-		else :
-			dummy[line[4]] += 1
-		if dummy[line[4]] > maxnum:
-			maxnum = dummy[line[4]]
-			username = line[4]
-print(username, " ", maxnum)
-
-for i in f:
-	line = []
-	line = i.split(' ')
-	if line[4] == username:
-		
+# dummy_user = {}
+# target = []
+# for i in data['lists']:
+# 	if i[4] not in dummy_user:
+# 		dummy_user[i[4]] = i[4]
+# 		target.append(i[4])
+# print(target)
+# json.dump(target, ipdst)
