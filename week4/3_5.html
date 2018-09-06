@@ -22,7 +22,7 @@ var app = {};
 option = null;
 myChart.showLoading();
 
-$.get('3_6.json', function (diskData) {
+$.get('3_5.json', function (diskData) {
     myChart.hideLoading();
 
     function colorMappingChange(value) {
@@ -68,7 +68,7 @@ $.get('3_6.json', function (diskData) {
     myChart.setOption(option = {
 
         title: {
-            text: 'File type requests Ingress',
+            text: 'File type requests Egress',
             left: 'center'
         },
 
